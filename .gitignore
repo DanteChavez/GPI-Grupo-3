@@ -13,9 +13,6 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# Documentation
-docs/
-
 # OS
 .DS_Store
 Thumbs.db
