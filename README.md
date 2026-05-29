@@ -30,6 +30,7 @@ En etapas futuras, el proyecto podrá escalar para incluir ligas, partidos en ti
 
 - BD
 
+## Contenidos
 
 ```
 /GPI-Grupo-3
