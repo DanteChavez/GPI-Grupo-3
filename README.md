@@ -30,6 +30,23 @@ En etapas futuras, el proyecto podrá escalar para incluir ligas, partidos en ti
 
 - BD
 
+
+```
+/GPI-Grupo-3
+|--- /backend
+|    |--- /src                    # Código fuente backend (Rest)
+|    |--- /node_modules           # Paquetes pnpm
+|    |--- /test                   # Código de prueba
+|--- /frontend
+|    |--- /assets                 # Imágenes frontend
+|    |--- /public
+|    |--- /src                    # Código fuente frontend (React)
+|    |--- /node_modules           # Paquetes npm
+|--- /docs                        # Documentos útiles (pdf, word, excel)
+|--- /data
+|--- /docker
+|--- /secrets                     # Archivos importantes para la seguridad del sistema (ver en el github en la parte de secrets)
+```
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
