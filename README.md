@@ -13,3 +13,24 @@ La plataforma contará con una interfaz web intuitiva donde los usuarios podrán
 
 
 En etapas futuras, el proyecto podrá escalar para incluir ligas, partidos en tiempo real, comparaciones avanzadas y visualizaciones gráficas más complejas. Sin embargo, en esta primera versión se prioriza la correcta implementación de la base de datos y la visualización básica de estadísticas.
+
+
+
+--- TODO ---
+
+
+# Definir tecnologías de:
+
+- Backend
+
+- Frontend
+
+- BD
+
+# Definir diseño de 
+
+- Backend
+
+- Frontend
+
+- BD
