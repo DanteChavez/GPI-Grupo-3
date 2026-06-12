@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node -e \"const c=require('./frontend.config.json');process.env.PORT=c.server.port\" && next dev --port $(node -e \"const c=require('./frontend.config.json');process.stdout.write(String(c.server.port))\")",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --port $(node -e \"const c=require('./frontend.config.json');process.stdout.write(String(c.server.port))\")",
     "lint": "eslint"
   },
   "dependencies": {
