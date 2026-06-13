@@ -15,10 +15,9 @@ const command = isDev ? "dev" : "start";
 
 console.log(`> Iniciando Next.js en modo ${command} en el puerto ${port}...`);
 
-// Lanzamos Next.js usando un proceso hijo, compatible con Windows y Linux
-const child = spawn("npx", ["next", command, "-p", port.toString()], {
+// Lanzamos Next.js usando el binario local para evitar problemas de npx en Docker
+const child = spawn("node", ["node_modules/next/dist/bin/next", command, "-p", port.toString(), "-H", "0.0.0.0"], {
   stdio: "inherit",
-  shell: true,
   env: { ...process.env, PORT: port.toString() },
 });
 

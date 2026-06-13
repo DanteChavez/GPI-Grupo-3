@@ -1,5 +1,5 @@
 # 1. Imagen base con Node.js y pnpm activado
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
@@ -10,7 +10,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # 3. Construir la aplicación Next.js
 FROM base AS builder
@@ -35,11 +35,12 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/frontend.config.json ./frontend.config.json
+COPY --from=builder /app/run.mjs ./run.mjs
 
 USER nextjs
 
 # Exponemos el puerto 5000 (por defecto en tu config, aunque Next.js buscará el del config dinámicamente)
 EXPOSE 5000
 
-# Usar el script start de package.json, el cual ya está configurado para usar frontend.config.json
-CMD ["pnpm", "start"]
+# Usar Node directamente sobre run.mjs evita que pnpm intente escribir en caché sin permisos
+CMD ["node", "run.mjs"]
