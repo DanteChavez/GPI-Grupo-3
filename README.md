@@ -29,7 +29,13 @@ En etapas futuras, el proyecto podrá escalar para incluir ligas, partidos en ti
 ```
 /GPI-Grupo-3
 |--- /backend
+|    |--- /auth
 |    |--- /src                    # Código fuente backend (Rest)
+|    |    | --- /database
+|    |    | --- /interfases
+|    |    | --- /providers
+|    |    | --- /schemas
+|    |    | --- /services
 |    |--- /node_modules           # Paquetes pnpm
 |    |--- /test                   # Código de prueba
 |--- /frontend
