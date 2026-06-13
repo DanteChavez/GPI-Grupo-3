@@ -18,17 +18,11 @@ En etapas futuras, el proyecto podrá escalar para incluir ligas, partidos en ti
 --- TODO ---
 
 
-## Definir tecnologías de:
-
-- BD
 
 ## Definir diseño de 
 
 - Backend
 
-- Frontend
-
-- BD
 
 ## Contenidos
 
