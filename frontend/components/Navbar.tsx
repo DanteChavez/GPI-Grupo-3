@@ -14,7 +14,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-400">
-              FutStat
+              FootballDB
             </Link>
           </div>
           <div className="flex space-x-2">
