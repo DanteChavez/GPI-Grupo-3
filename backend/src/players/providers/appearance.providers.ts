@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { AppearanceSchema } from 'src/schemas/appearances.schema';
+import { AppearanceSchema } from '../schemas/appearances.schema';
 
 export const appearanceProviders = [
     {

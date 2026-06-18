@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { NationalTeamsSchema } from 'src/schemas/national_teams.schema';
+import { NationalTeamsSchema } from '../schemas/national_teams.schema';
 
 export const nationalTeamsProviders = [
     {

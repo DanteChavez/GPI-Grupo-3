@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { TransfersSchema } from 'src/schemas/transfers.schema';
+import { TransfersSchema } from '../schemas/transfers.schema';
 
 export const transferProviders = [
     {

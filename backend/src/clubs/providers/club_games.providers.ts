@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { ClubGamesSchema } from 'src/schemas/club_games.schema';
+import { ClubGamesSchema } from '../schemas/club_games.schema';
 
 export const clubGamesProviders = [
     {

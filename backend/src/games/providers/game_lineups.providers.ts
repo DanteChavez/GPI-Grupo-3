@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { GameLineupsSchema } from 'src/schemas/game_lineups.schema';
+import { GameLineupsSchema } from '../schemas/game_lineups.schema';
 
 export const gameLineupsProviders = [
     {

@@ -1,0 +1,8 @@
+{
+    "server": {
+        "url": "mongodb://admin:admin123@mongodb:27017/",
+        "port": 27027
+
+        
+    }
+}

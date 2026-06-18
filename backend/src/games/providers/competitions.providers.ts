@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { CompetitionSchema } from 'src/schemas/competitions.schema';
+import { CompetitionSchema } from '../schemas/competitions.schema';
 
 export const competitionProviders = [
     {

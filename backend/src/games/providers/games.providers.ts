@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { GamesSchema } from 'src/schemas/games.schema';
+import { GamesSchema } from '../schemas/games.schema';
 
 export const gamesProviders = [
     {

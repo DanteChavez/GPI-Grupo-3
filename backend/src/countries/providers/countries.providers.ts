@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { CountriesSchema } from 'src/schemas/countries.schema';
+import { CountriesSchema } from '../schemas/countries.schema';
 
 export const coutnriesProviders = [
     {
