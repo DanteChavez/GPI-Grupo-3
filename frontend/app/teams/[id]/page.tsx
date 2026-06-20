@@ -1,22 +1,61 @@
+export const dynamic = 'force-dynamic';
+
 import PlayerCard from "@/components/PlayerCard";
 import MatchCard from "@/components/MatchCard";
 import Breadcrumb from "@/components/Breadcrumb";
+import Link from "next/link";
+
+const API_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
+async function getTeam(id: string) {
+  try {
+    const res = await fetch(`${API_URL}/clubs/${id}`, { cache: 'no-store' });
+    if (!res.ok) return null;
+    return res.json();
+  } catch { return null; }
+}
+
+async function getTeamPlayers(id: string) {
+  try {
+    const res = await fetch(`${API_URL}/clubs/${id}/players`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    return res.json();
+  } catch { return []; }
+}
+
+async function getTeamGames(id: string) {
+  try {
+    const res = await fetch(`${API_URL}/clubs/${id}/games?limit=5`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    return res.json();
+  } catch { return []; }
+}
 
 export default async function TeamPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const [teamData, players, games] = await Promise.all([
+    getTeam(id),
+    getTeamPlayers(id),
+    getTeamGames(id),
+  ]);
+
+  if (!teamData) return <div className="p-20 text-center text-white">Equipo no encontrado</div>;
 
   const teamInfo = {
-    name: "Real Madrid",
-    initials: "RM",
-    league: "La Liga",
-    country: "España",
+    name: teamData.name || "Equipo Desconocido",
+    initials: teamData.name ? teamData.name.substring(0, 2).toUpperCase() : "EQ",
+    league: teamData.league || "Liga Desconocida",
+    stadium: teamData.stadium_name || "Estadio Desconocido",
+    stadium_seats: teamData.stadium_seats
+      ? new Intl.NumberFormat('es-ES').format(teamData.stadium_seats)
+      : "-",
     stats: [
-      { label: "Posición", value: "1º" },
-      { label: "Puntos", value: "85" },
-      { label: "Goles a favor", value: "78" },
-      { label: "Goles en contra", value: "22" },
-      { label: "Victorias", value: "27" },
-      { label: "Partidos", value: "35" },
+      { label: "Plantilla", value: teamData.squad_size || "-" },
+      { label: "Edad Media", value: teamData.average_age || "-" },
+      { label: "Extranjeros", value: teamData.foreigners_percentage ? `${teamData.foreigners_percentage}%` : "-" },
+      { label: "Internacionales", value: teamData.national_team_players || "-" },
+      { label: "Balance Fichajes", value: teamData.net_transfer_record || "-" },
+      { label: "Última Temporada", value: teamData.last_season || "-" },
     ],
   };
 
@@ -38,9 +77,11 @@ export default async function TeamPage({ params }: { params: Promise<{ id: strin
             </div>
             <div className="flex-1 text-center md:text-left">
               <h1 className="animate-fade-in-up text-4xl md:text-5xl font-extrabold text-white mb-2">{teamInfo.name}</h1>
-              <p className="animate-fade-in-up delay-100 text-emerald-100/60 text-lg mb-8">{teamInfo.league} • {teamInfo.country}</p>
-              
-              <div className="animate-fade-in-up delay-200 grid grid-cols-3 md:grid-cols-6 gap-3">
+              <p className="animate-fade-in-up delay-100 text-emerald-100/60 text-lg mb-8">
+                {teamInfo.league} • 🏟️ {teamInfo.stadium} (Aforo: {teamInfo.stadium_seats})
+              </p>
+
+              <div className="animate-fade-in-up delay-200 grid grid-cols-2 md:grid-cols-6 gap-3">
                 {teamInfo.stats.map((stat, i) => (
                   <div key={i} className="glass rounded-xl p-3 text-center hover-lift cursor-default">
                     <p className="text-xl md:text-2xl font-black text-emerald-400">{stat.value}</p>
@@ -57,45 +98,42 @@ export default async function TeamPage({ params }: { params: Promise<{ id: strin
       {/* Plantilla y partidos */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Plantilla */}
+          {/* Plantilla real */}
           <div className="lg:col-span-2">
             <h2 className="animate-fade-in-up text-2xl font-bold mb-6 flex items-center gap-2">
               <span className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-sm">👥</span>
-              Plantilla Principal
+              Plantilla ({players.length} jugadores)
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {[
-                { id: "1", name: "Courtois", position: "POR", number: 1 },
-                { id: "2", name: "Bellingham", position: "MED", number: 5 },
-                { id: "3", name: "Vinícius Jr.", position: "DEL", number: 7 },
-                { id: "4", name: "Valverde", position: "MED", number: 15 },
-                { id: "5", name: "Rodrygo", position: "DEL", number: 11 },
-                { id: "6", name: "Militao", position: "DEF", number: 3 },
-              ].map((p, i) => (
-                <div key={p.id} className={`animate-stagger-in delay-${(i + 1) * 100}`}>
-                  <PlayerCard {...p} team="Real Madrid" />
-                </div>
-              ))}
-            </div>
+            {players.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {players.map((p: any, i: number) => (
+                  <div key={p.id} className={`animate-stagger-in delay-${((i % 6) + 1) * 100}`}>
+                    <PlayerCard {...p} team={teamInfo.name} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-zinc-500 text-center py-10">No hay jugadores registrados en la plantilla actual.</p>
+            )}
           </div>
 
-          {/* Últimos partidos */}
+          {/* Últimos partidos reales */}
           <div>
             <h2 className="animate-fade-in-up text-2xl font-bold mb-6 flex items-center gap-2">
               <span className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-sm">📅</span>
               Últimos Partidos
             </h2>
-            <div className="space-y-4">
-              {[
-                { id: "1", homeTeam: "Real Madrid", awayTeam: "Barcelona", homeScore: 3, awayScore: 1, status: "Finalizado", date: "Ayer" },
-                { id: "5", homeTeam: "Sevilla", awayTeam: "Real Madrid", homeScore: 1, awayScore: 2, status: "Finalizado", date: "Hace 1 sem" },
-                { id: "6", homeTeam: "Real Madrid", awayTeam: "Athletic", homeScore: 2, awayScore: 0, status: "Finalizado", date: "Hace 2 sem" },
-              ].map((m, i) => (
-                <div key={m.id} className={`animate-stagger-in delay-${(i + 1) * 100}`}>
-                  <MatchCard {...m} />
-                </div>
-              ))}
-            </div>
+            {games.length > 0 ? (
+              <div className="space-y-4">
+                {games.map((m: any, i: number) => (
+                  <div key={m.id} className={`animate-stagger-in delay-${(i + 1) * 100}`}>
+                    <MatchCard {...m} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-zinc-500 text-center py-10">No hay partidos registrados.</p>
+            )}
           </div>
         </div>
       </section>

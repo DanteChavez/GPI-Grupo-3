@@ -1,31 +1,100 @@
-import MatchCard from "@/components/MatchCard";
+export const dynamic = 'force-dynamic';
+
 import Breadcrumb from "@/components/Breadcrumb";
+import Image from "next/image";
+import PlayerImage from "@/components/PlayerImage";
+import Link from "next/link";
+import PlayerStatsClient from "@/components/PlayerStatsClient";
+
+const API_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
+async function getPlayer(id: string) {
+  try {
+    const res = await fetch(`${API_URL}/players/${id}`, { cache: 'no-store' });
+    if (!res.ok) return null;
+    return res.json();
+  } catch { return null; }
+}
+
+async function getAppearances(id: string) {
+  try {
+    const res = await fetch(`${API_URL}/players/${id}/appearances`, { cache: 'no-store' });
+    if (!res.ok) return null;
+    return res.json();
+  } catch { return null; }
+}
+
+function calculateAge(dateString: string) {
+  if (!dateString) return "-";
+  const today = new Date();
+  const birthDate = new Date(dateString);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+}
+
+function formatPosition(position: string, subPosition?: string) {
+  if (subPosition) return subPosition;
+  const map: Record<string, string> = {
+    'Goalkeeper': 'Portero',
+    'Defender': 'Defensa',
+    'Midfield': 'Mediocampista',
+    'Attack': 'Delantero',
+  };
+  return map[position] || position;
+}
+
+function formatFoot(foot: string) {
+  const map: Record<string, string> = { right: 'Diestro', left: 'Zurdo', both: 'Ambidiestro' };
+  return map[foot] || foot || '-';
+}
 
 export default async function PlayerPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const [playerData, appearancesData] = await Promise.all([
+    getPlayer(id),
+    getAppearances(id),
+  ]);
 
-  const playerInfo = {
-    name: "Vinícius Jr.",
-    initial: "V",
-    team: "Real Madrid",
-    number: 7,
-    position: "Delantero",
-    nationality: "Brasil",
-    quickStats: [
-      { label: "Edad", value: "23" },
-      { label: "Altura", value: "1.76m" },
-      { label: "Goles", value: "15" },
-      { label: "Asist.", value: "8" },
-    ],
+  if (!playerData) return <div className="p-20 text-center text-white">Jugador no encontrado</div>;
+
+  const age = playerData.date_of_birth ? calculateAge(playerData.date_of_birth) : "-";
+
+  const formattedValue = playerData.market_value_in_eur
+    ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR', notation: 'compact', maximumFractionDigits: 1 }).format(playerData.market_value_in_eur)
+    : "-";
+
+  const highestValue = playerData.highest_market_value_in_eur
+    ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR', notation: 'compact', maximumFractionDigits: 1 }).format(playerData.highest_market_value_in_eur)
+    : "-";
+
+  const summary = appearancesData?.summary || {
+    appearances: 0, goals: 0, assists: 0, yellowCards: 0, redCards: 0, minutesPlayed: 0,
   };
 
-  const seasonStats = [
-    { label: "Partidos Jugados", value: 28, max: 38 },
-    { label: "Tiros al Arco / Partido", value: 2.4, max: 5 },
-    { label: "Pases Completados", value: "82%", width: 82 },
-    { label: "Regates Exitosos", value: "65%", width: 65 },
-    { label: "Duelos Aéreos", value: "45%", width: 45 },
-  ];
+  const recentAppearances = appearancesData?.recent || [];
+
+  const playerInfo = {
+    name: playerData.name || "Jugador Desconocido",
+    initial: playerData.name ? playerData.name.charAt(0).toUpperCase() : "J",
+    team: playerData.team || "Equipo Libre",
+    current_club_id: playerData.current_club_id,
+    position: formatPosition(playerData.position, playerData.sub_position),
+    nationality: playerData.country_of_citizenship || "Nacionalidad",
+    countryOfBirth: playerData.country_of_birth,
+    cityOfBirth: playerData.city_of_birth,
+    image_url: playerData.image_url,
+    agent: playerData.agent_name,
+    quickStats: [
+      { label: "Edad", value: age },
+      { label: "Altura", value: playerData.height_in_cm ? `${playerData.height_in_cm}cm` : "-" },
+      { label: "Pie", value: formatFoot(playerData.foot) },
+      { label: "Valor", value: formattedValue },
+    ],
+  };
 
   return (
     <div className="flex flex-col w-full">
@@ -40,20 +109,34 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
           <Breadcrumb items={[{ label: "Jugadores", href: "/players" }, { label: playerInfo.name }]} />
 
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mt-4">
-            {/* Avatar grande */}
-            <div className="animate-scale-in relative w-36 h-36 md:w-44 md:h-44 rounded-full glass border-4 border-emerald-400/20 shadow-2xl shadow-emerald-500/10 shrink-0 flex items-center justify-center text-6xl md:text-7xl font-bold text-emerald-400/70">
-              {playerInfo.initial}
-              <div className="absolute -bottom-2 -right-2 glass rounded-full px-3 py-1 text-sm font-bold text-emerald-300">
-                #{playerInfo.number}
-              </div>
+            {/* Avatar */}
+            <div className="animate-scale-in relative w-36 h-36 md:w-44 md:h-44 rounded-full glass border-4 border-emerald-400/20 shadow-2xl shadow-emerald-500/10 shrink-0 flex items-center justify-center text-6xl md:text-7xl font-bold text-emerald-400/70 overflow-hidden">
+              {playerInfo.image_url ? (
+                <PlayerImage 
+                  src={playerInfo.image_url} 
+                  alt={playerInfo.name} 
+                  className="object-cover" 
+                  sizes="(max-width: 176px) 100vw, 176px" 
+                  fallbackNode={playerInfo.initial}
+                />
+              ) : (
+                playerInfo.initial
+              )}
             </div>
 
             <div className="flex-1 text-center md:text-left">
               <div className="animate-fade-in-up inline-block glass rounded-full px-4 py-1.5 text-sm font-bold text-emerald-300 mb-3">
-                {playerInfo.team} • {playerInfo.position}
+                {playerInfo.current_club_id ? (
+                  <Link href={`/teams/${playerInfo.current_club_id}`} className="hover:text-emerald-200 transition-colors">
+                    {playerInfo.team}
+                  </Link>
+                ) : playerInfo.team} • {playerInfo.position}
               </div>
               <h1 className="animate-fade-in-up delay-100 text-4xl md:text-5xl font-extrabold text-white mb-2">{playerInfo.name}</h1>
-              <p className="animate-fade-in-up delay-200 text-emerald-100/60 text-lg mb-8">{playerInfo.position} • {playerInfo.nationality}</p>
+              <p className="animate-fade-in-up delay-200 text-emerald-100/60 text-lg mb-8">
+                🌍 {playerInfo.nationality}
+                {playerInfo.cityOfBirth && ` • 📍 ${playerInfo.cityOfBirth}, ${playerInfo.countryOfBirth}`}
+              </p>
 
               <div className="animate-fade-in-up delay-300 grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {playerInfo.quickStats.map((stat, i) => (
@@ -69,51 +152,14 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
         <div className="absolute bottom-0 left-0 w-full h-28 bg-gradient-to-t from-zinc-50 dark:from-zinc-950 to-transparent z-10"></div>
       </section>
 
-      {/* Estadísticas y partidos */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Rendimiento */}
-          <div className="animate-fade-in-up delay-400 glass-card rounded-3xl p-8">
-            <h2 className="text-xl font-bold mb-8 flex items-center gap-2">
-              <span className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-sm">📈</span>
-              Rendimiento en Temporada
-            </h2>
-            <div className="space-y-6">
-              {seasonStats.map((stat, i) => (
-                <div key={i} className="animate-fade-in-left" style={{ animationDelay: `${500 + i * 100}ms` }}>
-                  <div className="flex justify-between text-sm font-medium mb-2">
-                    <span className="text-zinc-600 dark:text-zinc-300">{stat.label}</span>
-                    <span className="font-bold text-emerald-600 dark:text-emerald-400">{stat.value}</span>
-                  </div>
-                  <div className="h-2.5 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-1000" 
-                      style={{ width: `${stat.width || (Number(stat.value) / Number(stat.max)) * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Últimos partidos */}
-          <div>
-            <h2 className="animate-fade-in-up text-xl font-bold mb-8 flex items-center gap-2">
-              <span className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-sm">📅</span>
-              Últimos Partidos Jugados
-            </h2>
-            <div className="space-y-4">
-              {[
-                { id: "1", homeTeam: "Real Madrid", awayTeam: "Barcelona", homeScore: 3, awayScore: 1, status: "Finalizado", date: "Ayer" },
-                { id: "5", homeTeam: "Sevilla", awayTeam: "Real Madrid", homeScore: 1, awayScore: 2, status: "Finalizado", date: "Hace 1 sem" },
-              ].map((m, i) => (
-                <div key={m.id} className={`animate-stagger-in delay-${(i + 1) * 100}`}>
-                  <MatchCard {...m} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      {/* Estadísticas Interactivas */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <PlayerStatsClient 
+          playerInfo={playerInfo}
+          summary={summary}
+          highestValue={highestValue}
+          appearances={appearancesData?.recent || []}
+        />
       </section>
     </div>
   );

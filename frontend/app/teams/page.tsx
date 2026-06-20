@@ -1,22 +1,49 @@
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
 import TeamCard from "@/components/TeamCard";
 import Breadcrumb from "@/components/Breadcrumb";
 
-// Datos mock – se reemplazarán con llamadas al backend
-const MOCK_TEAMS = [
-  { id: "1", name: "Real Madrid", league: "La Liga", position: 1 },
-  { id: "2", name: "Barcelona", league: "La Liga", position: 2 },
-  { id: "3", name: "Manchester City", league: "Premier League", position: 1 },
-  { id: "4", name: "Arsenal", league: "Premier League", position: 2 },
-  { id: "5", name: "Bayern Munich", league: "Bundesliga", position: 1 },
-  { id: "6", name: "Borussia Dortmund", league: "Bundesliga", position: 2 },
-  { id: "7", name: "PSG", league: "Ligue 1", position: 1 },
-  { id: "8", name: "Juventus", league: "Serie A", position: 1 },
-  { id: "9", name: "Inter Milan", league: "Serie A", position: 2 },
-];
-
-const LEAGUES = ["Todas", "La Liga", "Premier League", "Bundesliga", "Ligue 1", "Serie A"];
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export default function TeamsPage() {
+  const [teams, setTeams] = useState<any[]>([]);
+  const [competitions, setCompetitions] = useState<any[]>([]);
+  const [search, setSearch] = useState('');
+  const [competition, setCompetition] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  // Fetch competitions for filter tabs
+  useEffect(() => {
+    fetch(`${API_URL}/competitions?type=domestic_league`)
+      .then(res => res.ok ? res.json() : [])
+      .then(setCompetitions)
+      .catch(() => setCompetitions([]));
+  }, []);
+
+  // Fetch teams with debounce
+  const fetchTeams = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (search) params.set('search', search);
+      if (competition) params.set('competition', competition);
+      params.set('limit', '30');
+      const res = await fetch(`${API_URL}/clubs?${params.toString()}`);
+      if (res.ok) {
+        setTeams(await res.json());
+      }
+    } catch (e) {
+      console.error('Failed to fetch teams:', e);
+    }
+    setLoading(false);
+  }, [search, competition]);
+
+  useEffect(() => {
+    const timer = setTimeout(fetchTeams, 300);
+    return () => clearTimeout(timer);
+  }, [fetchTeams]);
+
   return (
     <div className="flex flex-col w-full">
       {/* Mini hero */}
@@ -49,6 +76,8 @@ export default function TeamsPage() {
               <input
                 id="search-team"
                 type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder="Ej: Real Madrid, Bayern..."
                 className="w-full px-4 py-3 rounded-xl border border-zinc-200/50 dark:border-zinc-700/50 bg-white/50 dark:bg-zinc-800/50 backdrop-blur-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
               />
@@ -59,38 +88,39 @@ export default function TeamsPage() {
               </label>
               <select
                 id="filter-league"
+                value={competition}
+                onChange={(e) => setCompetition(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border border-zinc-200/50 dark:border-zinc-700/50 bg-white/50 dark:bg-zinc-800/50 backdrop-blur-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
               >
-                {LEAGUES.map((l) => <option key={l}>{l}</option>)}
+                <option value="">Todas</option>
+                {competitions.map((c: any) => (
+                  <option key={c.id} value={c.id}>{c.name} ({c.countryName})</option>
+                ))}
               </select>
             </div>
           </div>
         </div>
 
-        {/* Tabs de liga */}
-        <div className="animate-fade-in-up delay-300 flex gap-2 flex-wrap mb-8">
-          {LEAGUES.map((l, i) => (
-            <button
-              key={l}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 ${
-                i === 0
-                  ? "bg-emerald-500 text-white shadow-md shadow-emerald-500/30"
-                  : "glass-card text-zinc-600 dark:text-zinc-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-600 dark:hover:text-emerald-400"
-              }`}
-            >
-              {l}
-            </button>
-          ))}
-        </div>
+
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {MOCK_TEAMS.map((team, i) => (
-            <div key={team.id} className={`animate-stagger-in delay-${((i % 6) + 1) * 100}`}>
-              <TeamCard {...team} />
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center py-20">
+            <div className="w-8 h-8 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {teams.length > 0 ? (
+              teams.map((team: any, i: number) => (
+                <div key={team.id} className={`animate-stagger-in delay-${((i % 6) + 1) * 100}`}>
+                  <TeamCard {...team} />
+                </div>
+              ))
+            ) : (
+              <p className="text-zinc-500 col-span-3 text-center py-10">No se encontraron equipos con esos criterios.</p>
+            )}
+          </div>
+        )}
       </section>
     </div>
   );

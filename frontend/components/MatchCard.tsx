@@ -8,9 +8,11 @@ interface MatchCardProps {
   awayScore: number;
   status: string;
   date: string;
+  round?: string;
+  stadium?: string;
 }
 
-export default function MatchCard({ id, homeTeam, awayTeam, homeScore, awayScore, status, date }: MatchCardProps) {
+export default function MatchCard({ id, homeTeam, awayTeam, homeScore, awayScore, status, date, round, stadium }: MatchCardProps) {
   const isLive = status === "En vivo";
 
   return (
@@ -23,7 +25,7 @@ export default function MatchCard({ id, homeTeam, awayTeam, homeScore, awayScore
         <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/0 via-teal-500/0 to-emerald-500/0 group-hover:from-emerald-500/5 group-hover:via-teal-500/5 group-hover:to-emerald-500/5 rounded-2xl transition-all duration-500 blur-xl -z-10" />
 
         <div className="flex justify-between items-center text-xs text-zinc-500 dark:text-zinc-400 mb-4">
-          <span className="font-medium">{date}</span>
+          <span className="font-medium line-clamp-1">{date} {round && `• ${round}`}</span>
           <span className={`px-2 py-1 rounded-full font-semibold ${
             isLive 
               ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 animate-pulse-soft" 
@@ -39,7 +41,7 @@ export default function MatchCard({ id, homeTeam, awayTeam, homeScore, awayScore
             <div className="w-12 h-12 rounded-full bg-zinc-100/80 dark:bg-zinc-800/80 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform duration-300 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/20">
               {homeTeam.charAt(0)}
             </div>
-            <span className="font-semibold text-sm text-center line-clamp-1">{homeTeam}</span>
+            <span className="font-semibold text-sm text-center line-clamp-2">{homeTeam}</span>
           </div>
 
           <div className="flex items-center justify-center gap-4 px-4">
@@ -56,9 +58,15 @@ export default function MatchCard({ id, homeTeam, awayTeam, homeScore, awayScore
             <div className="w-12 h-12 rounded-full bg-zinc-100/80 dark:bg-zinc-800/80 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform duration-300 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/20">
               {awayTeam.charAt(0)}
             </div>
-            <span className="font-semibold text-sm text-center line-clamp-1">{awayTeam}</span>
+            <span className="font-semibold text-sm text-center line-clamp-2">{awayTeam}</span>
           </div>
         </div>
+        
+        {stadium && (
+          <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800/50 text-xs text-center text-zinc-400 dark:text-zinc-500 line-clamp-1">
+            📍 {stadium}
+          </div>
+        )}
       </div>
     </Link>
   );

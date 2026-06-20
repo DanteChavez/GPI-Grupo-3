@@ -1,23 +1,49 @@
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
 import PlayerCard from "@/components/PlayerCard";
 import Breadcrumb from "@/components/Breadcrumb";
 
-// Datos mock – se reemplazarán con llamadas al backend
-const MOCK_PLAYERS = [
-  { id: "1", name: "Vinícius Jr.", team: "Real Madrid", position: "DEL", number: 7 },
-  { id: "2", name: "Jude Bellingham", team: "Real Madrid", position: "MED", number: 5 },
-  { id: "3", name: "Erling Haaland", team: "Man City", position: "DEL", number: 9 },
-  { id: "4", name: "Kevin De Bruyne", team: "Man City", position: "MED", number: 17 },
-  { id: "5", name: "Robert Lewandowski", team: "Barcelona", position: "DEL", number: 9 },
-  { id: "6", name: "Pedri", team: "Barcelona", position: "MED", number: 8 },
-  { id: "7", name: "Kylian Mbappé", team: "Real Madrid", position: "DEL", number: 10 },
-  { id: "8", name: "Bukayo Saka", team: "Arsenal", position: "EXT", number: 7 },
-  { id: "9", name: "Lamine Yamal", team: "Barcelona", position: "EXT", number: 19 },
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
+const POSITIONS = [
+  { value: '', label: 'Todas' },
+  { value: 'Goalkeeper', label: 'Portero' },
+  { value: 'Defender', label: 'Defensa' },
+  { value: 'Midfield', label: 'Mediocampista' },
+  { value: 'Attack', label: 'Delantero' },
 ];
 
-const POSITIONS = ["Todas", "POR", "DEF", "MED", "EXT", "DEL"];
-const TEAMS = ["Todos", "Real Madrid", "Barcelona", "Man City", "Arsenal"];
-
 export default function PlayersPage() {
+  const [players, setPlayers] = useState<any[]>([]);
+  const [search, setSearch] = useState('');
+  const [position, setPosition] = useState('');
+  const [club, setClub] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  const fetchPlayers = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (search) params.set('search', search);
+      if (position) params.set('position', position);
+      if (club) params.set('club', club);
+      params.set('limit', '40');
+      const res = await fetch(`${API_URL}/players?${params.toString()}`);
+      if (res.ok) {
+        setPlayers(await res.json());
+      }
+    } catch (e) {
+      console.error('Failed to fetch players:', e);
+    }
+    setLoading(false);
+  }, [search, position, club]);
+
+  useEffect(() => {
+    const timer = setTimeout(fetchPlayers, 300);
+    return () => clearTimeout(timer);
+  }, [fetchPlayers]);
+
   return (
     <div className="flex flex-col w-full">
       {/* Mini hero */}
@@ -50,20 +76,24 @@ export default function PlayersPage() {
               <input
                 id="search-player"
                 type="text"
-                placeholder="Ej: Vinícius Jr., Haaland..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Ej: Messi, Haaland, Mbappé..."
                 className="w-full px-4 py-3 rounded-xl border border-zinc-200/50 dark:border-zinc-700/50 bg-white/50 dark:bg-zinc-800/50 backdrop-blur-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
               />
             </div>
             <div className="md:w-52">
-              <label htmlFor="filter-team" className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">
+              <label htmlFor="filter-club" className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">
                 🏟️ Equipo
               </label>
-              <select
-                id="filter-team"
-                className="w-full px-4 py-3 rounded-xl border border-zinc-200/50 dark:border-zinc-700/50 bg-white/50 dark:bg-zinc-800/50 backdrop-blur-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
-              >
-                {TEAMS.map((t) => <option key={t}>{t}</option>)}
-              </select>
+              <input
+                id="filter-club"
+                type="text"
+                value={club}
+                onChange={(e) => setClub(e.target.value)}
+                placeholder="Ej: Barcelona..."
+                className="w-full px-4 py-3 rounded-xl border border-zinc-200/50 dark:border-zinc-700/50 bg-white/50 dark:bg-zinc-800/50 backdrop-blur-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
+              />
             </div>
             <div className="md:w-44">
               <label htmlFor="filter-position" className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">
@@ -71,22 +101,36 @@ export default function PlayersPage() {
               </label>
               <select
                 id="filter-position"
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border border-zinc-200/50 dark:border-zinc-700/50 bg-white/50 dark:bg-zinc-800/50 backdrop-blur-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
               >
-                {POSITIONS.map((p) => <option key={p}>{p}</option>)}
+                {POSITIONS.map((p) => (
+                  <option key={p.value} value={p.value}>{p.label}</option>
+                ))}
               </select>
             </div>
           </div>
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {MOCK_PLAYERS.map((player, i) => (
-            <div key={player.id} className={`animate-stagger-in delay-${((i % 8) + 1) * 100}`}>
-              <PlayerCard {...player} />
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center py-20">
+            <div className="w-8 h-8 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {players.length > 0 ? (
+              players.map((player: any, i: number) => (
+                <div key={player.id} className={`animate-stagger-in delay-${((i % 8) + 1) * 100}`}>
+                  <PlayerCard {...player} />
+                </div>
+              ))
+            ) : (
+              <p className="text-zinc-500 col-span-4 text-center py-10">No se encontraron jugadores con esos criterios.</p>
+            )}
+          </div>
+        )}
       </section>
     </div>
   );

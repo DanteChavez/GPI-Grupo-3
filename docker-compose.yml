@@ -2,6 +2,7 @@ services:
   mongodb:
     image: mongo:7.0
     container_name: footballdb-mongo
+    command: mongod --setParameter diagnosticDataCollectionEnabled=false
     restart: unless-stopped
     ports:
       - "27017:27017"
@@ -10,8 +11,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: admin123
       MONGO_INITDB_DATABASE: footballdb
     volumes:
-      - mongodb_data:/data/db
-      - mongodb_config:/data/configdb
+      - ./docker-data/mongo-db:/data/db
+      - ./docker-data/mongo-config:/data/configdb
       - ./data/json:/docker-entrypoint-initdb.d
     networks:
       - footballdb-net
@@ -39,6 +40,24 @@ services:
     networks:
       - footballdb-net
 
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: footballdb-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://admin:admin123@mongodb:27017/footballdb?authSource=admin
+    depends_on:
+      mongodb:
+        condition: service_started
+    networks:
+      - footballdb-net
+
+
   frontend:
     build:
       context: ./frontend
@@ -49,8 +68,8 @@ services:
       - "5000:5000"
     environment:
       - NODE_ENV=production
-      # Preparamos la variable para cuando se agregue y conecte el backend
-      # - NEXT_PUBLIC_API_URL=http://backend:3000/api 
+      - NEXT_PUBLIC_API_URL=http://localhost:3000
+      - API_URL=http://backend:3000
     networks:
       - footballdb-net
 

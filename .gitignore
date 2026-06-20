@@ -160,6 +160,7 @@ temp/
 # Docker
 # .dockerignore
 docker-compose.override.yml
+/docker-data/
 
 # Kubernetes
 k8s-secrets/
@@ -248,4 +249,4 @@ local.properties
 
 # Webhooks testing
 webhook-test-data/
-ngrok-*/
+ngrok-*/docker-data/

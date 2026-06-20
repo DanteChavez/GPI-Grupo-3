@@ -12,6 +12,14 @@ const port = frontendConfig.server?.port ?? 3000;
 const nextConfig: NextConfig = {
   /* Configuración del servidor leída desde frontend.config.json */
   serverExternalPackages: [],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
 };
 
 // Exportamos el puerto para que puedan usarlo otros scripts
