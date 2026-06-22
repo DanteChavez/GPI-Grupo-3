@@ -1,0 +1,763 @@
+{
+  "id": "f74ee1a9-72e5-470f-adae-a466af2b432c",
+  "version": "2.0",
+  "name": "GPI TEST",
+  "url": "http://localhost:5000",
+  "tests": [{
+    "id": "18308bcc-c304-4721-98b5-4fe3c4b48c69",
+    "name": "CP01 - Busqueda normal",
+    "commands": [{
+      "id": "3bdee602-084a-4772-a7fe-9d3d67908ae5",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c9d4fdc0-6b52-4817-b163-e4dc3c6060dc",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1449x917",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b75310de-bdbf-4dfd-af80-a2ba626d2966",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Jugadores",
+      "targets": [
+        ["linkText=Jugadores", "linkText"],
+        ["css=.relative:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Jugadores')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/players')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Jugadores')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "56472e25-ed84-4deb-885e-0d900840010b",
+      "comment": "",
+      "command": "click",
+      "target": "id=search-player",
+      "targets": [
+        ["id=search-player", "id"],
+        ["css=#search-player", "css:finder"],
+        ["xpath=//input[@id='search-player']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6285b50b-0876-4608-b13b-2f28b6975b91",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=search-player",
+      "targets": [],
+      "value": "5000"
+    }, {
+      "id": "a494ce8d-c414-49bf-95d8-139d82a21c26",
+      "comment": "",
+      "command": "executeScript",
+      "target": "const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'Lionel Messi'); input.dispatchEvent(new Event('input', { bubbles: true }));",
+      "targets": [],
+      "value": "Cristiano Ronaldo"
+    }, {
+      "id": "79126792-4f05-4f12-935e-3eba9dd6f03e",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "2000"
+    }, {
+      "id": "21d35233-3577-42f0-9271-9c09d35543ec",
+      "comment": "",
+      "command": "click",
+      "target": "css=.group-hover\\3Atext-emerald-400",
+      "targets": [
+        ["css=.group-hover\\3Atext-emerald-400", "css:finder"],
+        ["xpath=//a/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "69cd7ccf-f69a-4350-acb8-47eb00df0174",
+      "comment": "",
+      "command": "click",
+      "target": "css=.left-0",
+      "targets": [
+        ["css=.left-0", "css:finder"],
+        ["xpath=//div[6]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "e621b159-7dc7-47fd-ab03-1613d8887de1",
+    "name": "CP02 - Búsqueda parcial",
+    "commands": [{
+      "id": "30506cbe-8890-4ae7-8a10-8f80bcc5eef3",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d0a6003c-e1d1-4f2f-b4f9-e6c29136fe3d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1449x917",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c205d201-89f7-4b8d-96e4-c4e50ba9b1ee",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Jugadores",
+      "targets": [
+        ["linkText=Jugadores", "linkText"],
+        ["css=.relative:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Jugadores')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/players')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Jugadores')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a314bc10-6f78-4d97-bfe3-fcf32d0a8e2d",
+      "comment": "",
+      "command": "click",
+      "target": "id=search-player",
+      "targets": [
+        ["id=search-player", "id"],
+        ["css=#search-player", "css:finder"],
+        ["xpath=//input[@id='search-player']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "25e3d657-decc-447a-abc5-d372c62a3fb1",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=search-player",
+      "targets": [],
+      "value": "5000"
+    }, {
+      "id": "92b609a6-7416-456d-9733-d3e681e64a44",
+      "comment": "",
+      "command": "executeScript",
+      "target": "const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'Mess'); input.dispatchEvent(new Event('input', { bubbles: true }));",
+      "targets": [],
+      "value": "Cristiano"
+    }, {
+      "id": "ce93588a-697e-49bf-b464-80b277b8ff4f",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "2000"
+    }, {
+      "id": "982c40b9-54a2-4508-bddc-1a5a23bd42d4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.group-hover\\3Atext-emerald-400",
+      "targets": [
+        ["css=.group-hover\\3Atext-emerald-400", "css:finder"],
+        ["xpath=//a/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7a9843e4-5bfe-43e4-9837-b90c8a9765d9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.left-0",
+      "targets": [
+        ["css=.left-0", "css:finder"],
+        ["xpath=//div[6]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "7652e475-bfe6-4879-8cbf-a9d75e8358bc",
+    "name": "CP03: Verificar búsqueda de jugador inexistente",
+    "commands": [{
+      "id": "a86f4ae9-6a65-4be6-b087-5538a637225d",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e8f14267-4eaa-4155-98b7-f24f8a6b5064",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1449x917",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8f76c351-5b0f-49f8-ad51-c5e737f9d182",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Jugadores",
+      "targets": [
+        ["linkText=Jugadores", "linkText"],
+        ["css=.relative:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Jugadores')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/players')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Jugadores')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b475f803-af06-435a-891a-0eda32055161",
+      "comment": "",
+      "command": "click",
+      "target": "id=search-player",
+      "targets": [
+        ["id=search-player", "id"],
+        ["css=#search-player", "css:finder"],
+        ["xpath=//input[@id='search-player']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c2ec0399-aef9-4614-8ab2-945c4edd85c5",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=search-player",
+      "targets": [],
+      "value": "5000"
+    }, {
+      "id": "29da569e-5539-4974-ad52-bcce4dde1311",
+      "comment": "",
+      "command": "executeScript",
+      "target": "const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'Zzxxqq123'); input.dispatchEvent(new Event('input', { bubbles: true }));",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "94a66fa0-5bcd-44a4-92c7-8a81f221a5fd",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "2000"
+    }, {
+      "id": "865b4afa-a41d-4203-a15a-3c24d6fdfb4e",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//*[contains(text(), 'No se encontraron jugadores')]",
+      "targets": [],
+      "value": "No se encontraron jugadores con esos criterios."
+    }]
+  }, {
+    "id": "64052467-2b8c-46d6-bea7-e6963218a347",
+    "name": "CP04: Verificar búsqueda con campo vacío",
+    "commands": [{
+      "id": "b75ce9a5-8599-4f92-a232-23fbd83c0dfa",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "836ac1be-1cc8-4c97-b00b-a219369730ce",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1449x917",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "695b4846-b6aa-466c-b65d-6760cdbeac67",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Jugadores",
+      "targets": [
+        ["linkText=Jugadores", "linkText"],
+        ["css=.relative:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Jugadores')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/players')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Jugadores')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0b49a632-f38d-443f-93c5-cf3adda17333",
+      "comment": "",
+      "command": "click",
+      "target": "id=search-player",
+      "targets": [
+        ["id=search-player", "id"],
+        ["css=#search-player", "css:finder"],
+        ["xpath=//input[@id='search-player']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0c534456-0869-45c9-b722-73b07e937ce7",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=search-player",
+      "targets": [],
+      "value": "5000"
+    }, {
+      "id": "0f24fd7f-e394-48d2-81a0-8b422015b133",
+      "comment": "",
+      "command": "executeScript",
+      "target": "const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, ''); input.dispatchEvent(new Event('input', { bubbles: true }));",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bb514a51-28a1-489c-9891-b7682577a346",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "2000"
+    }, {
+      "id": "a642b904-edab-44e1-b2eb-83fa17247a18",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "id=search-player",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "b65a5bb3-e112-43f5-9957-a9c88aeb5e90",
+    "name": "CP05: Verificar búsqueda con solo espacios en blanco",
+    "commands": [{
+      "id": "52132f22-ca18-4df2-903b-ce2561ad8709",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1f7250f8-0cd5-487c-94ce-2e66ef3e5f9e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1449x917",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a6be4c02-8ccd-447a-88d5-552b62b631df",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Jugadores",
+      "targets": [
+        ["linkText=Jugadores", "linkText"],
+        ["css=.relative:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Jugadores')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/players')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Jugadores')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e21fa8c8-f9ce-4a71-9dcb-adbc808536b6",
+      "comment": "",
+      "command": "click",
+      "target": "id=search-player",
+      "targets": [
+        ["id=search-player", "id"],
+        ["css=#search-player", "css:finder"],
+        ["xpath=//input[@id='search-player']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "976f001b-ace5-4185-ad2f-09c841886021",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=search-player",
+      "targets": [],
+      "value": "5000"
+    }, {
+      "id": "02da7960-b70b-45ed-b7ff-a75c91feea39",
+      "comment": "",
+      "command": "executeScript",
+      "target": "const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, ' '); input.dispatchEvent(new Event('input', { bubbles: true }));",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2a0973e0-a057-4051-ab3d-7ad650741dcb",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "2000"
+    }, {
+      "id": "abfc78e5-aca6-4a91-8ec5-ce54e7da6709",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=.player-card",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "a6d5cd2c-8ae1-47c9-960b-183d31558493",
+    "name": "CP06: Verificar búsqueda con caracteres especiales",
+    "commands": [{
+      "id": "218e8728-d144-4b3b-99df-2a048a6d524c",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "65d39afe-8a18-4094-aed7-12238ccd23d1",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1449x917",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9e352372-55c5-498d-bd5b-874083d3da8a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Jugadores",
+      "targets": [
+        ["linkText=Jugadores", "linkText"],
+        ["css=.relative:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Jugadores')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/players')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Jugadores')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0f86e6fc-bbea-4086-9f45-1838489a4a89",
+      "comment": "",
+      "command": "click",
+      "target": "id=search-player",
+      "targets": [
+        ["id=search-player", "id"],
+        ["css=#search-player", "css:finder"],
+        ["xpath=//input[@id='search-player']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d13e56b3-cc38-4d88-8893-014f3760151c",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=search-player",
+      "targets": [],
+      "value": "5000"
+    }, {
+      "id": "aad7d9aa-03a7-4bf4-9ec0-ee9df8ebfd52",
+      "comment": "",
+      "command": "executeScript",
+      "target": "const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, '@@##$$%%'); input.dispatchEvent(new Event('input', { bubbles: true }));",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5003d3d5-373d-44c6-9598-3df364c7fe64",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "2000"
+    }, {
+      "id": "68c1fa27-3693-4d09-97cf-9d8c0f35220b",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "id=search-player",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "87ef815c-bdf0-45e8-89ef-7dd93267c108",
+    "name": "CP07: Verificar resistencia a inyección SQL (UI)",
+    "commands": [{
+      "id": "54e87e42-0d14-432b-a918-82256989415a",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9928f2ac-11e3-4937-9d91-8f521a0ab091",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1449x917",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fab3aff0-5dd7-44eb-abe9-318cfbaf1977",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Jugadores",
+      "targets": [
+        ["linkText=Jugadores", "linkText"],
+        ["css=.relative:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Jugadores')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/players')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Jugadores')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fe67a543-589b-4bd6-bfb2-51c2ce140f7a",
+      "comment": "",
+      "command": "click",
+      "target": "id=search-player",
+      "targets": [
+        ["id=search-player", "id"],
+        ["css=#search-player", "css:finder"],
+        ["xpath=//input[@id='search-player']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ed3a235e-b34f-4667-b353-6d37a35f43ac",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=search-player",
+      "targets": [],
+      "value": "5000"
+    }, {
+      "id": "81a4ec44-3265-4747-9d82-98489735f87a",
+      "comment": "",
+      "command": "executeScript",
+      "target": "const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, '\\' OR \\'1\\'=\\'1'); input.dispatchEvent(new Event('input', { bubbles: true }));",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "51506190-c165-4019-bf3f-b7bd49fcd9e9",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "2000"
+    }, {
+      "id": "10cba507-e7ba-4c10-8f7e-1e01993a995d",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=.player-card",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "a785fd57-c402-4f25-9403-e639f9e42bdf",
+    "name": "CP08: Verificar resistencia a script XSS (Cross-Site Scripting)",
+    "commands": [{
+      "id": "f52b8511-df30-436e-9a6c-2e935d372d61",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "46c8a8d4-ce8b-44e8-b37f-daeb366140e0",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1449x917",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ac1ad987-6c3f-4059-b7f2-e5d85b015427",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Jugadores",
+      "targets": [
+        ["linkText=Jugadores", "linkText"],
+        ["css=.relative:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Jugadores')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/players')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Jugadores')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "12f80de1-a902-44d2-99d2-ced57fdcd8ff",
+      "comment": "",
+      "command": "click",
+      "target": "id=search-player",
+      "targets": [
+        ["id=search-player", "id"],
+        ["css=#search-player", "css:finder"],
+        ["xpath=//input[@id='search-player']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e716c4c1-9f7c-48f1-a31f-922965bb3b25",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=search-player",
+      "targets": [],
+      "value": "5000"
+    }, {
+      "id": "d7092f99-1fa2-422e-891a-43022e6a3fdd",
+      "comment": "",
+      "command": "executeScript",
+      "target": "const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, '<script>alert(1)</script>'); input.dispatchEvent(new Event('input', { bubbles: true }));",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d4305100-c85a-4490-9e08-dff2ee4bc3f3",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "2000"
+    }, {
+      "id": "4a3fe7e0-1268-48df-9acd-b6a4a4d7fe32",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "id=search-player",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "88f82012-881e-4951-acef-5201855d601d",
+    "name": "CP09: Verificar búsqueda con cadena extremadamente larga",
+    "commands": [{
+      "id": "3b667a3a-592b-4059-9c11-5db77c5c7587",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dd176466-19cd-425e-aa12-3e4a36f929c9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1449x917",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f425173c-71bc-41ad-84c6-82bd3c5523d8",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Jugadores",
+      "targets": [
+        ["linkText=Jugadores", "linkText"],
+        ["css=.relative:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Jugadores')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/players')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Jugadores')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b3be9e3a-cad8-4f9f-a877-63ed18de3fff",
+      "comment": "",
+      "command": "click",
+      "target": "id=search-player",
+      "targets": [
+        ["id=search-player", "id"],
+        ["css=#search-player", "css:finder"],
+        ["xpath=//input[@id='search-player']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4bb984a4-b46e-4b8e-98b1-2e9a8c5ecc3b",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=search-player",
+      "targets": [],
+      "value": "5000"
+    }, {
+      "id": "018102a4-2036-4305-8e82-69e0061f60a6",
+      "comment": "",
+      "command": "executeScript",
+      "target": "const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'A'.repeat(500)); input.dispatchEvent(new Event('input', { bubbles: true }));",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e6ccfd67-8127-4ffc-acc3-52da0a83cf61",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "2000"
+    }, {
+      "id": "63e93835-7133-4b62-8de3-afcbaf97eeb1",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "id=search-player",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "1508b66e-3d95-42f6-9002-11d8df1110f9",
+    "name": "CP10: Verificar búsqueda con mayúsculas y minúsculas mezcladas",
+    "commands": [{
+      "id": "3970b6d8-6d9d-4183-a09b-65db07dc17fd",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8a04f62d-8c27-44db-93e3-37fd5894539f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1449x917",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ae1ccd64-4b4c-4cbb-a146-810e080ec730",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Jugadores",
+      "targets": [
+        ["linkText=Jugadores", "linkText"],
+        ["css=.relative:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Jugadores')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/players')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Jugadores')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d640f805-e242-495c-a117-a20450f9366d",
+      "comment": "",
+      "command": "click",
+      "target": "id=search-player",
+      "targets": [
+        ["id=search-player", "id"],
+        ["css=#search-player", "css:finder"],
+        ["xpath=//input[@id='search-player']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c882113e-e61e-4cac-ad5e-c7f1f64caa21",
+      "comment": "",
+      "command": "waitForElementEditable",
+      "target": "id=search-player",
+      "targets": [],
+      "value": "5000"
+    }, {
+      "id": "e0fa4659-96e5-4930-bdce-a87a558cde8f",
+      "comment": "",
+      "command": "executeScript",
+      "target": "const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'mEsSi'); input.dispatchEvent(new Event('input', { bubbles: true }));",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2e6d5679-0b76-4ceb-a650-e0a49e3145e7",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "2000"
+    }, {
+      "id": "ef4d39a7-d02d-43a1-99b5-b40233e89890",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//*[contains(text(), 'Lionel Messi')]",
+      "targets": [],
+      "value": "Lionel Messi"
+    }]
+  }],
+  "suites": [{
+    "id": "316f339e-9ef6-46ac-9d7b-041725310b65",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:5000/"],
+  "plugins": []
+}

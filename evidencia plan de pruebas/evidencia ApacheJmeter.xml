@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testResults version="1.2">
+<httpSample t="4" it="0" lt="4" ct="1" ts="1782106298960" s="true" lb="CP11_Detalle_Jugador_Normal" rc="200" rm="OK" tn="Grupo de Hilos 1-1" dt="text" by="827" sby="188" ng="1" na="1">
+  <assertionResult>
+    <name>Response Assertion</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <java.net.URL>http://localhost:3000/players/8198</java.net.URL>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="0" ts="1782106298967" s="true" lb="CP12_Detalle_Jugador_Invalido" rc="404" rm="Not Found" tn="Grupo de Hilos 1-1" dt="text" by="355" sby="189" ng="1" na="1">
+  <assertionResult>
+    <name>Response Assertion</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <java.net.URL>http://localhost:3000/players/99999</java.net.URL>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="0" ts="1782106298970" s="true" lb="CP13_Buscar_Club_Normal" rc="200" rm="OK" tn="Grupo de Hilos 1-1" dt="text" by="562" sby="140" ng="1" na="1">
+  <assertionResult>
+    <name>Response Assertion</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <java.net.URL>http://localhost:3000/clubs?search=Real+Madrid</java.net.URL>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="0" ts="1782106298973" s="true" lb="CP14_Buscar_Club_Inexistente" rc="200" rm="OK" tn="Grupo de Hilos 1-1" dt="text" by="267" sby="145" ng="1" na="1">
+  <assertionResult>
+    <name>Response Assertion</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <java.net.URL>http://localhost:3000/clubs?search=Club+Fantasma+FC</java.net.URL>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="0" ts="1782106298975" s="true" lb="CP15_Buscar_Club_Numeros" rc="200" rm="OK" tn="Grupo de Hilos 1-1" dt="text" by="267" sby="134" ng="1" na="1">
+  <assertionResult>
+    <name>Response Assertion</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <java.net.URL>http://localhost:3000/clubs?search=12345</java.net.URL>
+</httpSample>
+<httpSample t="1" it="0" lt="1" ct="0" ts="1782106298978" s="true" lb="CP16_Estadisticas_Club" rc="200" rm="OK" tn="Grupo de Hilos 1-1" dt="text" by="560" sby="125" ng="1" na="1">
+  <assertionResult>
+    <name>Response Assertion</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <java.net.URL>http://localhost:3000/clubs/418</java.net.URL>
+</httpSample>
+<httpSample t="3" it="0" lt="3" ct="0" ts="1782106298980" s="true" lb="CP17_Ultimos_Partidos" rc="200" rm="OK" tn="Grupo de Hilos 1-1" dt="text" by="2605" sby="129" ng="1" na="1">
+  <assertionResult>
+    <name>Response Assertion</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <java.net.URL>http://localhost:3000/games?limit=5</java.net.URL>
+</httpSample>
+<httpSample t="1" it="0" lt="0" ct="1" ts="1782106298983" s="true" lb="CP18_API_Caida" rc="Non HTTP response code: org.apache.http.conn.HttpHostConnectException" rm="Non HTTP response message: Connect to localhost:9999 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: connect" tn="Grupo de Hilos 1-1" dt="text" by="2631" sby="0" ng="1" na="1">
+  <assertionResult>
+    <name>Response Assertion</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <java.net.URL>http://localhost:9999/stats/counts</java.net.URL>
+</httpSample>
+<httpSample t="1" it="0" lt="1" ct="0" ts="1782106298985" s="false" lb="CP19_Validacion_Tipo_Dato_ID" rc="500" rm="Internal Server Error" tn="Grupo de Hilos 1-1" dt="text" by="338" sby="139" ng="1" na="1">
+  <assertionResult>
+    <name>Response Assertion</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: message expected to equal /
+
+****** received  : [[[Internal Server Error]]]
+
+****** comparison: [[[400                  ]]]
+
+/</failureMessage>
+  </assertionResult>
+  <java.net.URL>http://localhost:3000/players/texto_de_prueba</java.net.URL>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="0" ts="1782106298986" s="true" lb="CP20_Competicion_Forzada" rc="200" rm="OK" tn="Grupo de Hilos 1-1" dt="text" by="267" sby="142" ng="1" na="1">
+  <assertionResult>
+    <name>Response Assertion</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <java.net.URL>http://localhost:3000/games?competition=NoExiste</java.net.URL>
+</httpSample>
+
+</testResults>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SuitePruebasSelenium>
+  <Prueba nombre="CP01 - Busqueda normal">
+    <Paso>1.open on / OK</Paso>
+    <Paso>2.setWindowSize on 1449x917 OK</Paso>
+    <Paso>3.click on linkText=Jugadores OK</Paso>
+    <Paso>4.click on id=search-player OK</Paso>
+    <Paso>5.waitForElementEditable on id=search-player with value 5000 OK</Paso>
+    <Paso>6.executeScript on const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'Lionel Messi'); input.dispatchEvent(new Event('input', { bubbles: true })); with value Cristiano Ronaldo OK</Paso>
+    <Paso>7.pause with value 2000 OK</Paso>
+    <Paso>8.click on css=.group-hoverAtext-emerald-400 OK</Paso>
+    <Paso>9.click on css=.left-0 OK</Paso>
+    <Paso>Exitoso</Paso>
+    <Estado>Exitoso</Estado>
+  </Prueba>
+  <Prueba nombre="CP02 - Búsqueda parcial">
+    <Paso>1.open on / OK</Paso>
+    <Paso>2.setWindowSize on 1449x917 OK</Paso>
+    <Paso>3.click on linkText=Jugadores OK</Paso>
+    <Paso>4.click on id=search-player OK</Paso>
+    <Paso>5.waitForElementEditable on id=search-player with value 5000 OK</Paso>
+    <Paso>6.executeScript on const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'Mess'); input.dispatchEvent(new Event('input', { bubbles: true })); with value Cristiano OK</Paso>
+    <Paso>7.pause with value 2000 OK</Paso>
+    <Paso>8.click on css=.group-hoverAtext-emerald-400 OK</Paso>
+    <Paso>9.click on css=.left-0 OK</Paso>
+    <Paso>Exitoso</Paso>
+    <Estado>Exitoso</Estado>
+  </Prueba>
+  <Prueba nombre="CP03: Verificar búsqueda de jugador inexistente">
+    <Paso>1.open on / OK</Paso>
+    <Paso>2.setWindowSize on 1449x917 OK</Paso>
+    <Paso>3.click on linkText=Jugadores OK</Paso>
+    <Paso>4.click on id=search-player OK</Paso>
+    <Paso>5.waitForElementEditable on id=search-player with value 5000 OK</Paso>
+    <Paso>6.executeScript on const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'Zzxxqq123'); input.dispatchEvent(new Event('input', { bubbles: true })); OK</Paso>
+    <Paso>7.pause with value 2000 OK</Paso>
+    <Paso>8.Trying to find xpath=//*[contains(text(), 'No se encontraron jugadores')]... OK</Paso>
+    <Paso>Exitoso</Paso>
+    <Estado>Exitoso</Estado>
+  </Prueba>
+  <Prueba nombre="CP04: Verificar búsqueda con campo vacío">
+    <Paso>1.open on / OK</Paso>
+    <Paso>2.setWindowSize on 1449x917 OK</Paso>
+    <Paso>3.click on linkText=Jugadores OK</Paso>
+    <Paso>4.click on id=search-player OK</Paso>
+    <Paso>5.waitForElementEditable on id=search-player with value 5000 OK</Paso>
+    <Paso>6.executeScript on const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, ''); input.dispatchEvent(new Event('input', { bubbles: true })); OK</Paso>
+    <Paso>7.pause with value 2000 OK</Paso>
+    <Paso>8.assertElementPresent on id=search-player OK</Paso>
+    <Paso>Exitoso</Paso>
+    <Estado>Exitoso</Estado>
+  </Prueba>
+  <Prueba nombre="CP05: Verificar búsqueda con solo espacios en blanco">
+    <Paso>1.open on / OK</Paso>
+    <Paso>2.setWindowSize on 1449x917 OK</Paso>
+    <Paso>3.click on linkText=Jugadores OK</Paso>
+    <Paso>4.click on id=search-player OK</Paso>
+    <Paso>5.waitForElementEditable on id=search-player with value 5000 OK</Paso>
+    <Paso>6.executeScript on const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, ' '); input.dispatchEvent(new Event('input', { bubbles: true })); OK</Paso>
+    <Paso>7.pause with value 2000 OK</Paso>
+    <Paso>8.assertElementNotPresent on css=.player-card OK</Paso>
+    <Paso>Exitoso</Paso>
+    <Estado>Exitoso</Estado>
+  </Prueba>
+  <Prueba nombre="CP06: Verificar búsqueda con caracteres especiales">
+    <Paso>1.open on / OK</Paso>
+    <Paso>2.setWindowSize on 1449x917 OK</Paso>
+    <Paso>3.click on linkText=Jugadores OK</Paso>
+    <Paso>4.click on id=search-player OK</Paso>
+    <Paso>5.waitForElementEditable on id=search-player with value 5000 OK</Paso>
+    <Paso>6.executeScript on const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, '@@##$$%%'); input.dispatchEvent(new Event('input', { bubbles: true })); OK</Paso>
+    <Paso>7.pause with value 2000 OK</Paso>
+    <Paso>8.assertElementPresent on id=search-player OK</Paso>
+    <Paso>Exitoso</Paso>
+    <Estado>Exitoso</Estado>
+  </Prueba>
+  <Prueba nombre="CP07: Verificar resistencia a inyección SQL (UI)">
+    <Paso>1.open on / OK</Paso>
+    <Paso>2.setWindowSize on 1449x917 OK</Paso>
+    <Paso>3.click on linkText=Jugadores OK</Paso>
+    <Paso>4.click on id=search-player OK</Paso>
+    <Paso>5.waitForElementEditable on id=search-player with value 5000 OK</Paso>
+    <Paso>6.executeScript on const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'OR 1=1'); input.dispatchEvent(new Event('input', { bubbles: true })); OK</Paso>
+    <Paso>7.pause with value 2000 OK</Paso>
+    <Paso>8.assertElementNotPresent on css=.player-card OK</Paso>
+    <Paso>Exitoso</Paso>
+    <Estado>Exitoso</Estado>
+  </Prueba>
+  <Prueba nombre="CP08: Verificar resistencia a script XSS (Cross-Site Scripting)">
+    <Paso>1.open on / OK</Paso>
+    <Paso>2.setWindowSize on 1449x917 OK</Paso>
+    <Paso>3.click on linkText=Jugadores OK</Paso>
+    <Paso>4.click on id=search-player OK</Paso>
+    <Paso>5.waitForElementEditable on id=search-player with value 5000 OK</Paso>
+    <Paso>6.executeScript on const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'alert(1)'); input.dispatchEvent(new Event('input', { bubbles: true })); OK</Paso>
+    <Paso>7.pause with value 2000 OK</Paso>
+    <Paso>8.assertElementPresent on id=search-player OK</Paso>
+    <Paso>Exitoso</Paso>
+    <Estado>Exitoso</Estado>
+  </Prueba>
+  <Prueba nombre="CP09: Verificar búsqueda con cadena extremadamente larga">
+    <Paso>1.open on / OK</Paso>
+    <Paso>2.setWindowSize on 1449x917 OK</Paso>
+    <Paso>3.click on linkText=Jugadores OK</Paso>
+    <Paso>4.click on id=search-player OK</Paso>
+    <Paso>5.waitForElementEditable on id=search-player with value 5000 OK</Paso>
+    <Paso>6.executeScript on const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'A'); input.dispatchEvent(new Event('input', { bubbles: true })); OK</Paso>
+    <Paso>7.pause with value 2000 OK</Paso>
+    <Paso>8.assertElementPresent on id=search-player OK</Paso>
+    <Paso>Exitoso</Paso>
+    <Estado>Exitoso</Estado>
+  </Prueba>
+  <Prueba nombre="CP10: Verificar búsqueda con mayúsculas y minúsculas mezcladas">
+    <Paso>1.open on / OK</Paso>
+    <Paso>2.setWindowSize on 1449x917 OK</Paso>
+    <Paso>3.click on linkText=Jugadores OK</Paso>
+    <Paso>4.click on id=search-player OK</Paso>
+    <Paso>5.waitForElementEditable on id=search-player with value 5000 OK</Paso>
+    <Paso>6.executeScript on const input = document.getElementById('search-player'); const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(input, 'mEsSi'); input.dispatchEvent(new Event('input', { bubbles: true })); OK</Paso>
+    <Paso>7.pause with value 2000 OK</Paso>
+    <Paso>8.Trying to find xpath=//*[contains(text(), 'Lionel Messi')]... OK</Paso>
+    <Paso>Exitoso</Paso>
+    <Estado>Exitoso</Estado>
+  </Prueba>
+</SuitePruebasSelenium>

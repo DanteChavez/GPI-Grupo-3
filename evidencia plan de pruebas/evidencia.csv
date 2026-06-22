@@ -1,0 +1,17 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1782105557442,5,CP11_Detalle_Jugador_Normal,200,OK,Grupo de Hilos 1-1,text,true,,827,188,1,1,http://localhost:3000/players/8198,5,0,2
+1782105557448,2,CP12_Detalle_Jugador_Invalido,404,Not Found,Grupo de Hilos 1-1,text,true,,355,189,1,1,http://localhost:3000/players/99999,2,0,0
+1782105557450,3,CP13_Buscar_Club_Normal,200,OK,Grupo de Hilos 1-1,text,true,,562,140,1,1,http://localhost:3000/clubs?search=Real+Madrid,3,0,0
+1782105557453,2,CP14_Buscar_Club_Inexistente,200,OK,Grupo de Hilos 1-1,text,true,,267,145,1,1,http://localhost:3000/clubs?search=Club+Fantasma+FC,2,0,0
+1782105557455,3,CP15_Buscar_Club_Numeros,200,OK,Grupo de Hilos 1-1,text,true,,267,134,1,1,http://localhost:3000/clubs?search=12345,3,0,0
+1782105557458,1,CP16_Estadisticas_Club,200,OK,Grupo de Hilos 1-1,text,true,,560,125,1,1,http://localhost:3000/clubs/418,1,0,0
+1782105557460,2,CP17_Ultimos_Partidos,200,OK,Grupo de Hilos 1-1,text,true,,2605,129,1,1,http://localhost:3000/games?limit=5,2,0,0
+"1782105557463,1,CP18_API_Caida,Non HTTP response code: org.apache.http.conn.HttpHostConnectException,""Non HTTP response message: Connect to localhost:9999 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: connect"",Grupo de Hilos 1-1,text,true,,2631,0,1,1,http://localhost:9999/stats/counts,0,0,1"
+"1782105557464,1,CP19_Validacion_Tipo_Dato_ID,500,Internal Server Error,Grupo de Hilos 1-1,text,false,""Test failed: message expected to equal /"
+
+****** received  : [[[Internal Server Error]]]
+
+****** comparison: [[[400                  ]]]
+
+"/"",338,139,1,1,http://localhost:3000/players/texto_de_prueba,1,0,0"
+1782105557465,2,CP20_Competicion_Forzada,200,OK,Grupo de Hilos 1-1,text,true,,267,142,1,1,http://localhost:3000/games?competition=NoExiste,2,0,0
